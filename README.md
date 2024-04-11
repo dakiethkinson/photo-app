@@ -1,7 +1,7 @@
 # springboot-sample-app
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/NuJSbQxVgDP5yVbRSqcrhg/LpeS6ish8MmZy4vwcMGLLS/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/NuJSbQxVgDP5yVbRSqcrhg/LpeS6ish8MmZy4vwcMGLLS/tree/main)
-[![Coverage Status](https://coveralls.io/repos/github/codecentric/springboot-sample-app/badge.svg?branch=master)](https://coveralls.io/github/)
+[![codecov](https://codecov.io/gh/dakiethkinson/photo-app/graph/badge.svg?token=R1HSUWKL0G)](https://codecov.io/gh/dakiethkinson/photo-app)
 
  
 Minimal [Spring Boot](http://projects.spring.io/spring-boot/) sample app.
