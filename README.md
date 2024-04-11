@@ -1,6 +1,6 @@
 # springboot-sample-app
 
-[![Build Status](https://travis-ci.org/codecentric/springboot-sample-app.svg?branch=master)](https://travis-ci.org/)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/NuJSbQxVgDP5yVbRSqcrhg/LpeS6ish8MmZy4vwcMGLLS/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/NuJSbQxVgDP5yVbRSqcrhg/LpeS6ish8MmZy4vwcMGLLS/tree/main)
 [![Coverage Status](https://coveralls.io/repos/github/codecentric/springboot-sample-app/badge.svg?branch=master)](https://coveralls.io/github/)
 
  
