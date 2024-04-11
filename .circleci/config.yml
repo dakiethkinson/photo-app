@@ -1,7 +1,6 @@
 
 version: 2.1
-orbs:
-  codecov: codecov/codecov@4.0.1
+
 jobs:
   test-java:
     docker:
@@ -35,10 +34,14 @@ jobs:
       - run:
           name: deploy
           command: '#e.g. ./deploy.sh'
+orbs:
+  codecov: codecov/codecov@4.0.1
+  workflows:
+    upload-to-codecov:
+      jobs:
+        - checkout
+        - codecov/upload
 workflows:
-  upload-to-codecov:
-    jobs:
-      - codecov/upload
   build-and-test:
     jobs:
       - test-java
