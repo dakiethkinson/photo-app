@@ -1,4 +1,4 @@
-package com.atkinson.photographyapplication;
+package com.atkinson.users;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

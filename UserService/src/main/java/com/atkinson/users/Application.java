@@ -1,4 +1,4 @@
-package com.atkinson.photographyapplication;
+package com.atkinson.users;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

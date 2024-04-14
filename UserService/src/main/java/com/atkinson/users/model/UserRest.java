@@ -1,4 +1,4 @@
-package com.atkinson.photographyapplication.repository;
+package com.atkinson.users.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +11,7 @@ public class UserRest {
     private String email;
     private String userName;
     private String userId;
+    private String password;
 }
 
 
