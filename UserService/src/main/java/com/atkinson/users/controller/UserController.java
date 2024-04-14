@@ -15,6 +15,14 @@ import java.util.UUID;
 public class UserController {
 
 
+    // Discovery Service Endpoint
+
+    @GetMapping("/status")
+    public String status(){
+
+        return "Service Up";
+    }
+
     // This will need to be replaced with a repository lookup
     Map<String, UserRest> users;
 
