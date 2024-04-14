@@ -24,10 +24,10 @@ jobs:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
             - ~/.m2/repository
-  test-photography-application:
+  test-user-service:
     docker:
       - image: cimg/openjdk:17.0
-    working_directory: ~/project/PhotographyApplication
+    working_directory: ~/project/UserService
     steps:
       - checkout:
           path: ~/project
