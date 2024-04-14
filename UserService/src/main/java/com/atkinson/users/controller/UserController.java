@@ -83,7 +83,7 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable String userId){
         if(users.containsKey(userId)){
             users.remove(userId);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         }
         else {
             return ResponseEntity.notFound().build();
