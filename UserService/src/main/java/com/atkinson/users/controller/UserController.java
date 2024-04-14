@@ -80,13 +80,13 @@ public class UserController {
     }
 
     @DeleteMapping(path="/{userId}")
-    public ResponseEntity<UserRest> deleteUser(@PathVariable String userId){
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId){
         if(users.containsKey(userId)){
             users.remove(userId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.ok().build();
         }
         else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 }
