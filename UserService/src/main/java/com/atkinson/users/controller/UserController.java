@@ -6,22 +6,27 @@ import jakarta.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
+
+    // This will need to be replaced with a repository lookup
+    Map<String, UserRest> users;
+
     @GetMapping(path="/{userId}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserRest> getUser(@PathVariable String userId){
 
-        UserRest user = new UserRest();
-        user.setUserName("dakiethkinson");
-        user.setFirstName("Daniel");
-        user.setLastName("Atkinson");
-        user.setEmail("dakiethkinson@gmail.com");
-        user.setUserId(UUID.randomUUID().toString());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        if(users.containsKey(userId)){
+            return new ResponseEntity<>(users.get(userId), HttpStatus.OK);
+        } else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
     @GetMapping()
     public String getUsers(
@@ -34,6 +39,7 @@ public class UserController {
     @PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDTO userDTO){
+
         UserRest user = new UserRest();
         user.setUserName(userDTO.getUserName());
         user.setFirstName(userDTO.getFirstName());
@@ -41,16 +47,46 @@ public class UserController {
         user.setEmail(userDTO.getEmail());
         user.setUserId(UUID.randomUUID().toString());
         user.setPassword(userDTO.getPassword());
+
+        if(users == null) users = new HashMap<>();
+        users.put(user.getUserId(), user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PutMapping
-    public String updateUser(){
-        return "update User was called";
+    @PutMapping(path="/{userId}",consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<UserRest> updateUser(@PathVariable String userId, @Valid @RequestBody UserDTO userDTO){
+        UserRest updateUser = users.get(userId);
+
+        if (!userDTO.getFirstName().isBlank()){
+            updateUser.setFirstName(userDTO.getFirstName());
+        }
+        if (!userDTO.getLastName().isBlank()){
+            updateUser.setLastName(userDTO.getLastName());
+        }
+        if (!userDTO.getUserName().isBlank()){
+            updateUser.setUserName(userDTO.getUserName());
+        }
+        if (!userDTO.getEmail().isBlank()){
+            updateUser.setEmail(userDTO.getEmail());
+        }
+        if (!userDTO.getPassword().isBlank()){
+            updateUser.setPassword(userDTO.getPassword());
+        }
+
+        users.put(updateUser.getUserId(), updateUser);
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+
     }
 
-    @DeleteMapping
-    public String deleteUser(){
-        return "delete User was called";
+    @DeleteMapping(path="/{userId}")
+    public ResponseEntity<UserRest> deleteUser(@PathVariable String userId){
+        if(users.containsKey(userId)){
+            users.remove(userId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
