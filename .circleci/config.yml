@@ -2,10 +2,32 @@
 version: 2.1
 
 jobs:
-  test-java:
+  test-api-gateway:
     docker:
       - image: cimg/openjdk:17.0
-    working_directory: ~/project/Api Gateway
+    working_directory: ~/project/ApiGateway
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Calculate cache key
+          command: |-
+            find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
+                    sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
+      - restore_cache:
+          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+      - run:
+          command: mvn verify
+      - store_test_results:
+          path: target/surefire-reports
+      - save_cache:
+          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+          paths:
+            - ~/.m2/repository
+  test-user-service:
+    docker:
+      - image: cimg/openjdk:17.0
+    working_directory: ~/project/UserService
     steps:
       - checkout:
           path: ~/project
@@ -44,7 +66,8 @@ orbs:
 workflows:
   build-and-test:
     jobs:
-      - test-java
+      - test-api-gateway
+      - test-photography-application
     # - deploy:
     #     requires:
     #       - test-java
