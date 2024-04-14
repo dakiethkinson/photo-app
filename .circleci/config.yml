@@ -5,7 +5,7 @@ jobs:
   test-java:
     docker:
       - image: cimg/openjdk:17.0
-    working_directory: ~/project/Api Gateway
+    working_directory: ~/project/ApiGateway
     steps:
       - checkout:
           path: ~/project

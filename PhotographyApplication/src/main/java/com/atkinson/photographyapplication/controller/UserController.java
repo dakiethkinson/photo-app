@@ -6,11 +6,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
-    @GetMapping
-    public String getUser(){
-        return "get User was called.";
+    @GetMapping(path="/{userId}")
+    public String getUser(@PathVariable String userId){
+        return "get User was called with userId = " + userId;
     }
-
+    @GetMapping()
+    public String getUsers(@RequestParam(value="page") int page, @RequestParam(value="limit") int limit){
+        return "get Users was called with page " + page + " limit " + limit ;
+    }
     @PostMapping
     public String createUser(){
         return "post User was called";
