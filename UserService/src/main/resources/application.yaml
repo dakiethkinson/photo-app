@@ -1,0 +1,28 @@
+
+
+spring:
+
+  application:
+    name: User-Service
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://localhost:5432/photographyDB
+    username: postgres
+    password: postgres
+
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone:
+        http://localhost:8010/eureka

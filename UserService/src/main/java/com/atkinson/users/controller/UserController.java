@@ -1,22 +1,19 @@
 package com.atkinson.users.controller;
 
-import com.atkinson.users.model.UserRest;
-import com.atkinson.users.repository.UserDTO;
+import com.atkinson.users.model.User;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
-
     // Discovery Service Endpoint
-
     @GetMapping("/status")
     public String status(){
 
@@ -24,10 +21,10 @@ public class UserController {
     }
 
     // This will need to be replaced with a repository lookup
-    Map<String, UserRest> users;
+    Map<String, User> users;
 
     @GetMapping(path="/{userId}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserRest> getUser(@PathVariable String userId){
+    public ResponseEntity<User> getUser(@PathVariable String userId){
 
         if(users.containsKey(userId)){
             return new ResponseEntity<>(users.get(userId), HttpStatus.OK);
@@ -46,43 +43,40 @@ public class UserController {
     }
     @PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDTO userDTO){
+    public ResponseEntity<User> createUser(@Valid @RequestBody User newUserRequest){
 
-        UserRest user = new UserRest();
-        user.setUserName(userDTO.getUserName());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        user.setUserId(UUID.randomUUID().toString());
-        user.setPassword(userDTO.getPassword());
+        User newUser = new User();
+        newUser.setUserName(newUserRequest.getUserName());
+        newUser.setFirstName(newUserRequest.getFirstName());
+        newUser.setLastName(newUserRequest.getLastName());
+        newUser.setEmail(newUserRequest.getEmail());
+        newUser.setPassword(newUserRequest.getPassword());
 
         if(users == null) users = new HashMap<>();
-        users.put(user.getUserId(), user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
     @PutMapping(path="/{userId}",consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserRest> updateUser(@PathVariable String userId, @Valid @RequestBody UserDTO userDTO){
-        UserRest updateUser = users.get(userId);
+    public ResponseEntity<User> updateUser(@PathVariable String userId, @Valid @RequestBody User updateUserRequest){
+        User updateUser = users.get(userId);
 
-        if (!userDTO.getFirstName().isBlank()){
-            updateUser.setFirstName(userDTO.getFirstName());
+        if (!updateUserRequest.getFirstName().isBlank()){
+            updateUser.setFirstName(updateUserRequest.getFirstName());
         }
-        if (!userDTO.getLastName().isBlank()){
-            updateUser.setLastName(userDTO.getLastName());
+        if (!updateUserRequest.getLastName().isBlank()){
+            updateUser.setLastName(updateUserRequest.getLastName());
         }
-        if (!userDTO.getUserName().isBlank()){
-            updateUser.setUserName(userDTO.getUserName());
+        if (!updateUserRequest.getUserName().isBlank()){
+            updateUser.setUserName(updateUserRequest.getUserName());
         }
-        if (!userDTO.getEmail().isBlank()){
-            updateUser.setEmail(userDTO.getEmail());
+        if (!updateUserRequest.getEmail().isBlank()){
+            updateUser.setEmail(updateUserRequest.getEmail());
         }
-        if (!userDTO.getPassword().isBlank()){
-            updateUser.setPassword(userDTO.getPassword());
+        if (!updateUserRequest.getPassword().isBlank()){
+            updateUser.setPassword(updateUserRequest.getPassword());
         }
 
-        users.put(updateUser.getUserId(), updateUser);
         return new ResponseEntity<>(updateUser, HttpStatus.OK);
 
     }

@@ -1,29 +1,21 @@
 package com.atkinson.users.repository;
 
-import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class UserDTO {
-    @NotNull
-    @Size(min = 3)
+import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+
+
+@Data
+public class UserDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -2686664094901441707L;
+    private String userId;
     private String firstName;
-
-    @NotNull
-    @Size(min = 3)
     private String lastName;
-
-    @Email
-    @NotNull
     private String email;
-
-    @NotNull
-    @Size(min = 8, max = 16)
     private String password;
-
-    @NotNull
-    @Size(min = 5, max = 16)
+    private String encryptedPassword;
     private String userName;
 }
