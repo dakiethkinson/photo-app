@@ -1,15 +1,18 @@
 package com.atkinson.users.repository;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "app_users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = -5667444093602396011L;

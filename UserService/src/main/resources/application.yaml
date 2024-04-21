@@ -11,13 +11,15 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
   datasource:
     url: jdbc:postgresql://localhost:5432/photographyDB
     username: postgres
     password: postgres
-
-
+  security:
+    user:
+      name: user
+      password: user
 server:
   port: 0
 
@@ -26,3 +28,8 @@ eureka:
     service-url:
       defaultZone:
         http://localhost:8010/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5
+
+gateway:
+  ip: 10.0.0.46
