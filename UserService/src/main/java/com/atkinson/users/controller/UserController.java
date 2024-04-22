@@ -49,6 +49,12 @@ public class UserController {
 
         return "get Users was called with page " + page + " limit " + limit + " sort " + sort;
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserDTO userDTO){
+
+        return null;
+    }
     @PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CreateResponse> createUser(@Valid @RequestBody User newUserRequest){

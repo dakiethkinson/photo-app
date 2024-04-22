@@ -1,3 +1,4 @@
 .secrets
 secrets.properties
 .idea
+.dev-certs

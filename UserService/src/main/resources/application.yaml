@@ -33,3 +33,11 @@ eureka:
 
 gateway:
   ip: 10.0.0.46
+
+token:
+  expiration: 3600000
+  secret: CYDblORrZAKg7i23rKlMi2lcwes9lUd8Q3D1GD1ViBm1NPvEKNnXGY6Fno7Ob8Vz
+
+login:
+  url:
+    path: /users/login
