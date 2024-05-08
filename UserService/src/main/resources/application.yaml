@@ -41,3 +41,6 @@ token:
 login:
   url:
     path: /users/login
+signup:
+  url:
+    path: /users/signup

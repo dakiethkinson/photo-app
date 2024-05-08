@@ -15,6 +15,12 @@ spring:
       Api-Gateway
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedMethods: "*"
+            allowed-headers: "*"
       discovery:
         locator:
           enabled: true
@@ -26,59 +32,51 @@ spring:
             lb://User-Service
           predicates:
             - Path=/users/status
-            - Method=GET
-            - Header=Authorization, Bearer (.*)
           filters:
             - RemoveRequestHeader=Cookie
-            - AuthorizationHeaderFilter
+#            - AuthorizationHeaderFilter
         - id:
             get-user
           uri:
             lb://User-Service
           predicates:
             - Path=/users/{userId}
-            - Method=GET
-          filters:
-            - AuthorizationHeaderFilter
+#          filters:
+#            - AuthorizationHeaderFilter
         - id:
             get-users
           uri:
             lb://User-Service
           predicates:
             - Path=/users
-            - Method=GET
         - id:
             create-user
           uri:
             lb://User-Service
           predicates:
-            - Path=/users
-            - Method=POST
+            - Path=/users/signup
         - id:
             update-user
           uri:
             lb://User-Service
           predicates:
             - Path=/users/{userId}
-            - Method=PUT
-          filters:
-            - AuthorizationHeaderFilter
+#          filters:
+#            - AuthorizationHeaderFilter
         - id:
             delete-user
           uri:
             lb://User-Service
           predicates:
             - Path=/users/{userId}
-            - Method=DELETE
-          filters:
-            - AuthorizationHeaderFilter
+#          filters:
+#            - AuthorizationHeaderFilter
         - id:
             user-login
           uri:
             lb://User-Service
           predicates:
             - Path=/users/login
-            - Method=POST
 token:
   expiration: 3600000
   secret: CYDblORrZAKg7i23rKlMi2lcwes9lUd8Q3D1GD1ViBm1NPvEKNnXGY6Fno7Ob8Vz

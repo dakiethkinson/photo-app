@@ -13,6 +13,7 @@ const User = ({user}) => {
                     <p>{user.email}</p>
                     <p>{user.firstName}</p>
                     <p>{user.lastName}</p>
+                    <p>{user.password}</p>
                 </div>
             </div>
         </Link>

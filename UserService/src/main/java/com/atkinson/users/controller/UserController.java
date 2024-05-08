@@ -1,10 +1,12 @@
 package com.atkinson.users.controller;
 
 import com.atkinson.users.model.CreateResponse;
+import com.atkinson.users.model.Login;
 import com.atkinson.users.model.User;
 import com.atkinson.users.repository.UserDTO;
 import com.atkinson.users.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -15,6 +17,8 @@ import java.util.Map;
 
 import static org.modelmapper.convention.MatchingStrategies.STRICT;
 
+@CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -51,11 +55,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody @Valid UserDTO userDTO){
+    public ResponseEntity<User> login(@RequestBody @Valid Login loginRequest){
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(STRICT);
 
+        UserDTO userDTO = modelMapper.map(loginRequest, UserDTO.class);
+        userService.loadUserByUsername(userDTO.getUserName());
         return null;
     }
-    @PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
+    @PostMapping(path = "/signup", consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CreateResponse> createUser(@Valid @RequestBody User newUserRequest){
 
@@ -65,9 +73,8 @@ public class UserController {
         UserDTO userDTO = modelMapper.map(newUserRequest, UserDTO.class);
         userService.createUser(userDTO);
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(new ModelMapper().map(userDTO, CreateResponse.class));
+        return new ResponseEntity<>(modelMapper.map(userDTO, CreateResponse.class), HttpStatus.CREATED);
+
     }
 
     @PutMapping(path="/{userId}",consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},

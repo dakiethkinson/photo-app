@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 
 @Data
@@ -18,4 +19,7 @@ public class UserDTO implements Serializable {
     private String password;
     private String encryptedPassword;
     private String userName;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+    private Timestamp lastLogin;
 }

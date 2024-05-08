@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Data
 @Entity
@@ -31,4 +32,10 @@ public class UserEntity implements Serializable {
     private String encryptedPassword;
     @Column(nullable = false, unique = true, length = 16)
     private String userName;
+    @Column(nullable = false)
+    private Timestamp createdAt;
+    @Column(nullable = false)
+    private Timestamp updatedAt;
+    @Column(nullable = false)
+    private Timestamp lastLogin;
 }

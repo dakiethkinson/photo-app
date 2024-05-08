@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -36,6 +38,9 @@ public class UserService implements UserServiceIF{
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(STRICT);
         UserEntity userEntity = modelMapper.map(userDetails, UserEntity.class);
+        userEntity.setCreatedAt(Timestamp.from(Instant.now()));
+        userEntity.setUpdatedAt(Timestamp.from(Instant.now()));
+        userEntity.setLastLogin(Timestamp.from(Instant.now()));
         userRepo.save(userEntity);
         return null;
     }
